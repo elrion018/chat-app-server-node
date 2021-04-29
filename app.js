@@ -1,16 +1,16 @@
 const app = require('express')();
 const server = require('http').createServer(app);
-const io = require('socket.io')(server);
+const cors = require('cors');
+const io = require('socket.io')(server, {
+  cors: {
+    origin: 'http://localhost:8080',
+    methods: ['GET', 'POST'],
+    credentials: true,
+  },
 
-app.all('/*', function (request, response, next) {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'X-Requested-With');
-  next();
+  allowEIO3: true,
 });
-
-app.get('/', function (req, res) {
-  res.sendFile('start chatt app server');
-});
+app.use(cors);
 
 io.on('connection', function (socket) {
   socket.on('chat', function (data) {
