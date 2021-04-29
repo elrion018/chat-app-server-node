@@ -8,6 +8,20 @@ app.all('/*', function (request, response, next) {
   next();
 });
 
+app.get('/', function (req, res) {
+  res.sendFile('start chatt app server');
+});
+
+io.on('connection', function (socket) {
+  socket.on('chat', function (data) {
+    let returnMessage = {
+      message: data.message,
+    };
+
+    socket.broadcast.emit('chat', returnMessage);
+  });
+});
+
 server.listen(3000, function () {
   console.log('socket.io');
 });
