@@ -1,6 +1,7 @@
 const app = require('express')();
 const server = require('http').createServer(app);
 const cors = require('cors');
+app.use(cors);
 const io = require('socket.io')(server, {
   cors: {
     origin: 'http://localhost:8080',
@@ -10,7 +11,6 @@ const io = require('socket.io')(server, {
 
   allowEIO3: true,
 });
-app.use(cors);
 
 io.on('connection', function (socket) {
   socket.on('chat', function (data) {
