@@ -13,6 +13,14 @@ const io = require('socket.io')(server, {
 });
 
 io.on('connection', function (socket) {
+  socket.on('login', function (data) {
+    let returnMessage = {
+      message: data.message,
+    };
+
+    socket.broadcast.emit('login', returnMessage);
+  });
+
   socket.on('chat', function (data) {
     let returnMessage = {
       message: data.message,
